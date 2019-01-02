@@ -800,12 +800,14 @@ public class CatalogueTest {
 	
 	@Test
 	public void testClear() {
+		String resultatAttendu = cat.toString();
+		System.out.println(cat.toString());
 		cat.addProduit("Mars", 10, 5);
 		cat.addProduit("Treets", 10, 4);
 		cat.addProduit("Raider", 1, 10);
 		cat.addProduit("Twix", 10.47, 2);
 		cat.clear();
-		assertEquals("Le ", 2, cat.getNomProduits());
+		assertEquals("Fail test clear", resultatAttendu, cat.toString());
 	}
 
 	private I_Produit createProduit(String nom, double prixHT, int quantite) {

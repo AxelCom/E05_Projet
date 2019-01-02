@@ -1,8 +1,7 @@
 package metier;
 
 import java.text.DecimalFormat;
-
-public class Produit implements I_Produit {
+public class Produit implements I_Produit{
 
 	private int qteStock;
 	private String nomProduit;
@@ -62,6 +61,5 @@ public class Produit implements I_Produit {
 		 String prixTTC = df2.format(getPrixUnitaireTTC());
 		return this.nomProduit + " - prix HT : " + prixU + " € - prix TTC : "+ prixTTC +" € - quantité en stock : "+ this.qteStock + "\n";
 	}
-
 }
 

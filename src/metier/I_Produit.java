@@ -1,5 +1,5 @@
 package metier;
-public interface I_Produit {
+public interface I_Produit{
 
 	public abstract boolean ajouter(int qteAchetee);
 	public abstract boolean enlever(int qteVendue);

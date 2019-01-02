@@ -3,10 +3,14 @@ package metier;
 import java.lang.reflect.Array;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import metier.*;
-public class Catalogue implements I_Catalogue {
+public class Catalogue implements I_Catalogue{
 	
 	private ArrayList<I_Produit> lesProduits = new ArrayList<I_Produit>();
 	
@@ -114,7 +118,7 @@ public class Catalogue implements I_Catalogue {
 			return false;
 	}
 
-	@Override //DONE ??? //TODO STRING[] -> ARRAYLIST.sort -> STRING[]
+	@Override
 	public String[] getNomProduits() {
 		int count = 0;
 		String [] lesNoms = new String[lesProduits.size()];
@@ -122,6 +126,7 @@ public class Catalogue implements I_Catalogue {
 			lesNoms[count] = leProduit.getNom();
 			count++;
 		}
+		Arrays.sort(lesNoms);
 		return lesNoms;
 	}
 
@@ -165,7 +170,7 @@ public class Catalogue implements I_Catalogue {
 			return  phrases +"\n" +"Montant total TTC du stock : "+ montantTTTC +" €";
 		}
 		else {					 
-			return  "\n" +"Montant total TTC du stock : 0,00 €";
+			return "\n" +"Montant total TTC du stock : 0,00 €";
 		}
 	}
 }
