@@ -3,11 +3,18 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+import controllers.ctrl_Catalogue;
+import controllers.ctrl_marche;
+import controllers.ctrl_produit;
+import controllers.ctrl_stock;
+import metier.I_Catalogue;
 
 
-public class FenetrePrincipale extends JFrame implements ActionListener,
-		WindowListener {
-
+public class FenetrePrincipale extends JFrame implements ActionListener,WindowListener 
+{
+	I_Catalogue leCatalogue = ctrl_Catalogue.createCatalogue();
+	//ctrl_catalogue.addproduit marche pas .....
+	
 	private JButton btAfficher;
 	private JButton btNouveauProduit;
 	private JButton btSupprimerProduit;
@@ -19,7 +26,6 @@ public class FenetrePrincipale extends JFrame implements ActionListener,
 
 	
 	public FenetrePrincipale() {
-		
 		setTitle("exercice Produits");
 		setBounds(500, 500, 320, 250);
 		JPanel panAffichage = new JPanel();
@@ -29,7 +35,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener,
 		JPanel panQuitter = new JPanel();
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new FlowLayout());
-		btAfficher = new JButton("Quantitï¿½s en stock");
+		btAfficher = new JButton("Quantités en stock");
 		btNouveauProduit = new JButton("Nouveau Produit");
 		btSupprimerProduit = new JButton("Supprimer Produit");
 //		btNouvelleCategorie = new JButton("Nouvelle Categorie");
@@ -111,5 +117,4 @@ public class FenetrePrincipale extends JFrame implements ActionListener,
 	public static void main(String[] args) {
 		new FenetrePrincipale();
 	}
-
 }
