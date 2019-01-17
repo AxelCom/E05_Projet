@@ -1,15 +1,22 @@
 package controllers;
-import java.util.ArrayList;
 
-import metier.I_Produit;
-import metier.Produit;
+import metier.Catalogue;
+import metier.I_Catalogue;
 public class ctrl_produit {
 
-	public static Produit createProduit(String leNom, double lePrix, int laQuantite)
+	private static I_Catalogue monCata = Catalogue.getInstance();
+	
+	public static void createProduit(String leNom, double lePrix, int laQuantite)
 	{
-		Produit unProduit = new Produit(leNom, lePrix, laQuantite);
-		return unProduit;
+		// rajouter a la bdd
+		monCata.addProduit(leNom, lePrix, laQuantite);
 	}
 	
-	//TODO methode supprimerProduit qui supprime un produit des catalogue et de la bdd
+	public static void deleteProduit(String leNom) {
+		monCata.removeProduit(leNom);
+	}
+	public static String[] afficherNomProduits()
+	{
+		return monCata.getNomProduits();
+	}
 }

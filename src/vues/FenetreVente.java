@@ -3,6 +3,8 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+import controllers.ctrl_marche;
+
 public class FenetreVente extends JFrame implements ActionListener {
 
 	private JButton btVente;
@@ -22,7 +24,7 @@ public class FenetreVente extends JFrame implements ActionListener {
 		combo.setPreferredSize(new Dimension(100, 20));
 		contentPane.add(new JLabel("Produit"));
 		contentPane.add(combo);
-		contentPane.add(new JLabel("Quantitï¿½ vendue"));
+		contentPane.add(new JLabel("Quantité vendue"));
 		contentPane.add(txtQuantite);
 		contentPane.add(btVente);
 
@@ -31,6 +33,7 @@ public class FenetreVente extends JFrame implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		ctrl_marche.Vendre(combo.getSelectedItem().toString(), Integer.parseInt(txtQuantite.getText()));
 		this.dispose();
 	}
 

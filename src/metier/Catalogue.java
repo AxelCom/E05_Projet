@@ -13,11 +13,18 @@ import metier.*;
 public class Catalogue implements I_Catalogue{
 	
 	private ArrayList<I_Produit> lesProduits = new ArrayList<I_Produit>();
+	private static Catalogue instance = null;
 	
-	public Catalogue() {
+	private Catalogue() {
 		
 	}
 	
+	public static Catalogue getInstance()
+	{
+		if(instance == null)
+		instance = new Catalogue();
+		return instance;
+	}
 	@Override //DONE
 	public boolean addProduit(I_Produit produit) {
 		try {

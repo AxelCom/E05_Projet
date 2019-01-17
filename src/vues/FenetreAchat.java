@@ -3,6 +3,9 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
+import controllers.ctrl_marche;
+import controllers.ctrl_produit;
+
 public class FenetreAchat extends JFrame implements ActionListener {
 
 	private JButton btAchat;
@@ -23,7 +26,7 @@ public class FenetreAchat extends JFrame implements ActionListener {
 		combo.setPreferredSize(new Dimension(100, 20));
 		contentPane.add(new JLabel("Produit"));
 		contentPane.add(combo);
-		contentPane.add(new JLabel("Quantitï¿½ achetï¿½e"));
+		contentPane.add(new JLabel("Quantité achetée"));
 		contentPane.add(txtQuantite);
 		contentPane.add(btAchat);
 
@@ -33,6 +36,7 @@ public class FenetreAchat extends JFrame implements ActionListener {
 	}
 
 	public void actionPerformed(ActionEvent e) {
+		ctrl_marche.Acheter(combo.getSelectedItem().toString(), Integer.parseInt(txtQuantite.getText()));
 		this.dispose();
 	}
 

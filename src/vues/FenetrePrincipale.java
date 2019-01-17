@@ -3,18 +3,14 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-import controllers.ctrl_Catalogue;
 import controllers.ctrl_marche;
 import controllers.ctrl_produit;
 import controllers.ctrl_stock;
-import metier.I_Catalogue;
 
 
 public class FenetrePrincipale extends JFrame implements ActionListener,WindowListener 
 {
-	I_Catalogue leCatalogue = ctrl_Catalogue.createCatalogue();
-	//ctrl_catalogue.addproduit marche pas .....
-	
+	//I_Catalogue leCatalogue = Catalogue.getInstance();
 	private JButton btAfficher;
 	private JButton btNouveauProduit;
 	private JButton btSupprimerProduit;
@@ -23,7 +19,15 @@ public class FenetrePrincipale extends JFrame implements ActionListener,WindowLi
 	private JButton btAchat;
 	private JButton btVente;
 	private JButton btQuitter;
-
+	
+	public void jeuEssaie()
+	{
+		ctrl_produit.createProduit("test",10,50);
+		ctrl_produit.createProduit("test2",20,51);
+		ctrl_produit.createProduit("test3",30,52);
+		ctrl_produit.createProduit("test4",40,53);
+		
+	}
 	
 	public FenetrePrincipale() {
 		setTitle("exercice Produits");
@@ -75,12 +79,12 @@ public class FenetrePrincipale extends JFrame implements ActionListener,WindowLi
 
 /* tabProduits permet de tester le fonctionnement des fen�tres avec un tableau de noms de produits "en dur"
    Quand l'application fonctionnera, il faudra bien s�r r�cup�rer les noms des produits dans le Catalogue */
-		String[] tabProduits = new String[] { "Mars", "Raider", "Twix", "Treets", "M&M's", "Smarties" };
+		String[] tabProduits = ctrl_produit.afficherNomProduits();
 /* M�me chose pour tabCategories (partie 4) */ 		
 //		String[] tabCategories = new String[] {"Bio", "Luxe" };
 		
 		if (e.getSource() == btAfficher)
-			new FenetreAffichage("ajourd'hui nous allons faire de la programmation en 5 couches");
+			new FenetreAffichage(ctrl_stock.AfficherStock());
 		if (e.getSource() == btNouveauProduit)
 //			new FenetreNouveauProduit(tabCategories);
 			new FenetreNouveauProduit();
@@ -115,6 +119,7 @@ public class FenetrePrincipale extends JFrame implements ActionListener,WindowLi
 	
 	
 	public static void main(String[] args) {
-		new FenetrePrincipale();
+		FenetrePrincipale maFenetre = new FenetrePrincipale();
+		maFenetre.jeuEssaie();
 	}
 }
