@@ -1,19 +1,16 @@
 package metier;
 
-import java.lang.reflect.Array;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
-import metier.*;
 public class Catalogue implements I_Catalogue{
 	
 	private ArrayList<I_Produit> lesProduits = new ArrayList<I_Produit>();
 	private static Catalogue instance = null;
+	private static I_ProduitDAO connexionProduits = new ConnexionOracle();
 	
 	private Catalogue() {
 		
@@ -30,6 +27,7 @@ public class Catalogue implements I_Catalogue{
 		try {
 			if(!nameAlreadyUse(produit.getNom()) && produit.getPrixUnitaireHT() > 0 && produit.getQuantite() >= 0 ) {
 			lesProduits.add(produit);
+			connexionProduits.ajouter(produit.getNom(), produit.getPrixUnitaireHT(), produit.getQuantite());
 			return true;
 			}
 			return false;
@@ -45,6 +43,7 @@ public class Catalogue implements I_Catalogue{
 			if(!nameAlreadyUse(nom)  && prix > 0 && qte >= 0) {
 				Produit leProduit = new Produit(nom,prix,qte);
 				lesProduits.add(leProduit);
+				connexionProduits.ajouter(nom, prix, qte);
 				return true;
 			}
 			return false;
@@ -62,6 +61,7 @@ public class Catalogue implements I_Catalogue{
 		for (I_Produit leProduit : l) {
 			if(leProduit.getPrixUnitaireHT() > 0 && leProduit.getQuantite() >= 0 && !nameAlreadyUse(leProduit.getNom())) {
 				lesProduits.add(leProduit);
+				//connexionProduits.ajouter(leProduit.getNom(), leProduit.getPrixUnitaireHT(), leProduit.getQuantite());
 				nbInsert++;
 			}
 		}
@@ -83,6 +83,7 @@ public class Catalogue implements I_Catalogue{
 		if(lesProduits.get(i).getNom().equals(nom))
 		{
 			lesProduits.remove(lesProduits.get(i));
+			connexionProduits.supprimer(nom);
 			return true;
 		}
 		return false;
@@ -99,6 +100,7 @@ public class Catalogue implements I_Catalogue{
 			if(lesProduits.get(i).getNom().equals(nomProduit))
 			{
 				lesProduits.get(i).ajouter(qteAchetee);
+				connexionProduits.modifier(nomProduit, lesProduits.get(i).getQuantite());
 				return true;
 			}
 		}
@@ -117,6 +119,7 @@ public class Catalogue implements I_Catalogue{
 				{
 					if(lesProduits.get(i).getQuantite() >= qteVendue ) {
 						lesProduits.get(i).enlever(qteVendue);
+						connexionProduits.modifier(nomProduit,lesProduits.get(i).getQuantite());
 						return true;
 					}
 				}

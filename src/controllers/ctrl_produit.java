@@ -2,6 +2,7 @@ package controllers;
 
 import metier.Catalogue;
 import metier.I_Catalogue;
+
 public class ctrl_produit {
 
 	private static I_Catalogue monCata = Catalogue.getInstance();

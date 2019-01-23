@@ -22,10 +22,10 @@ public class FenetrePrincipale extends JFrame implements ActionListener,WindowLi
 	
 	public void jeuEssaie()
 	{
-		ctrl_produit.createProduit("test",10,50);
-		ctrl_produit.createProduit("test2",20,51);
-		ctrl_produit.createProduit("test3",30,52);
-		ctrl_produit.createProduit("test4",40,53);
+		//ctrl_produit.createProduit("test",10,50);
+		//ctrl_produit.createProduit("test2",20,51);
+		//ctrl_produit.createProduit("test3",30,52);
+		//ctrl_produit.createProduit("test4",40,53);
 		
 	}
 	
@@ -120,6 +120,6 @@ public class FenetrePrincipale extends JFrame implements ActionListener,WindowLi
 	
 	public static void main(String[] args) {
 		FenetrePrincipale maFenetre = new FenetrePrincipale();
-		maFenetre.jeuEssaie();
+		//maFenetre.jeuEssaie();
 	}
 }
