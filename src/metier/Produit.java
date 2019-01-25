@@ -17,41 +17,39 @@ public class Produit implements I_Produit{
 		this.qteStock = laQuantite;
 	}
 	
-	@Override//DONE
+	@Override
 	public boolean ajouter(int qteAchetee) {
-		//check negatif ??
 		this.qteStock += qteAchetee;
 		return true;
 	}
 
-	@Override//DONE
+	@Override
 	public boolean enlever(int qteVendue) {
-		//check negatif ??
 		this.qteStock -= qteVendue;
 		return true;
 	}
 
-	@Override // DONE
+	@Override
 	public String getNom() {
 		return this.nomProduit;
 	}
 
-	@Override // DONE
+	@Override
 	public int getQuantite() {
 		return this.qteStock;
 	}
 
-	@Override // DONE
+	@Override
 	public double getPrixUnitaireHT() {
 		return this.prixUnitaireHT;
 	}
 
-	@Override // DONE
+	@Override
 	public double getPrixUnitaireTTC() {
 		return this.prixUnitaireHT+(this.prixUnitaireHT*tauxTVA);
 	}
 
-	@Override // DONE
+	@Override
 	public double getPrixStockTTC() {
 		return this.qteStock*getPrixUnitaireTTC();
 	}

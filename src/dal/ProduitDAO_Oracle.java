@@ -73,7 +73,6 @@ public class ProduitDAO_Oracle implements I_ProduitDAO {
 			if(rs.next()) {
 				gererProduit(rs);
 			}
-			//chargerProduits();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -89,7 +88,6 @@ public class ProduitDAO_Oracle implements I_ProduitDAO {
 				rs.updateDouble("qteStock", produit.getQuantite());
 				rs.updateRow();
 			}
-			//chargerProduits();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -99,7 +97,6 @@ public class ProduitDAO_Oracle implements I_ProduitDAO {
 	@Override
 	public void supprimer(I_Produit produit) {
 		try {
-			//pst = cn.prepareStatement("DELETE from produits WHERE nomproduit = ?",ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
 			pst.setString(1, produit.getNom());
 			rs = pst.executeQuery();
 			if(rs.next()) {
@@ -121,22 +118,12 @@ public class ProduitDAO_Oracle implements I_ProduitDAO {
 			nomProduit = rs.getString("nomProduit");
 			prixHT = rs.getDouble("prixUnitaireHT");
 			qteStock = rs.getInt("qteStock");
-			//System.out.println(nomProduit + " " + prixHT + " " + qteStock);
 			unProduit = new Produit(nomProduit,prixHT,qteStock);
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 		return unProduit;
 	}
-	
-//	private void chargerResultSet() {
-//		try {
-//			rs = st.executeQuery("SELECT nomProduit, prixUnitaireHT, qteStock from Produits order by nomProduit asc");
-//		}
-//		catch(SQLException e) {
-//			e.printStackTrace();
-//		}
-//	}
 	
 	private void deconnexion() {
 		try {

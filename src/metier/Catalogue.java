@@ -25,7 +25,7 @@ public class Catalogue implements I_Catalogue{
 		instance = new Catalogue();
 		return instance;
 	}
-	@Override //DONE
+	@Override
 	public boolean addProduit(I_Produit produit) {
 		try {
 			if(!nameAlreadyUse(produit.getNom()) && produit.getPrixUnitaireHT() > 0 && produit.getQuantite() >= 0 ) {
@@ -40,7 +40,7 @@ public class Catalogue implements I_Catalogue{
 		}
 	}
 
-	@Override //DONE
+	@Override
 	public boolean addProduit(String nom, double prix, int qte) {
 		try {
 			if(!nameAlreadyUse(nom)  && prix > 0 && qte >= 0) {
@@ -57,7 +57,7 @@ public class Catalogue implements I_Catalogue{
 
 	}
 
-	@Override //DONE???
+	@Override
 	public int addProduits(List<I_Produit> l) {
 		try {
 			int nbInsert = 0;
@@ -75,7 +75,7 @@ public class Catalogue implements I_Catalogue{
 		}
 	}
 
-	@Override // DONE ??? check flo
+	@Override
 	public boolean removeProduit(String nom) {
 		int i = 0;
 		
@@ -92,7 +92,7 @@ public class Catalogue implements I_Catalogue{
 		return false;
 	}
 
-	@Override // DONE ?? check flo
+	@Override
 	public boolean acheterStock(String nomProduit, int qteAchetee) {
 		int i = 0;
 		if(qteAchetee > 0) {
@@ -110,7 +110,7 @@ public class Catalogue implements I_Catalogue{
 		return false;
 	}
 
-	@Override // DONE ?? check flo
+	@Override
 	public boolean vendreStock(String nomProduit, int qteVendue) {
 			int i = 0;
 			if(qteVendue > 0) {
@@ -143,20 +143,16 @@ public class Catalogue implements I_Catalogue{
 		return lesNoms;
 	}
 
-	@Override //DONE ???
+	@Override
 	public double getMontantTotalTTC() {
 		double result = 0;
 		for (I_Produit leProduit : lesProduits) {
 			result += leProduit.getPrixStockTTC();
 		}
-		//DecimalFormat df2 = new DecimalFormat("#0.00");
-		//String test = df2.format(result);
-		//double result1 = Double.parseDouble(test);
-		//System.out.println(test);
 		return Math.round(result*100.0)/100.0;
 	}
 
-	@Override //DONE
+	@Override
 	public void clear() {
 		this.lesProduits.clear();
 	}
