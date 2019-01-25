@@ -1,15 +1,19 @@
-package metier;
+package dal;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
+
+import metier.I_Produit;
+import metier.Produit;
 
 
-public class ConnexionOracle implements I_ProduitDAO {
+public class ProduitDAO_Oracle implements I_ProduitDAO {
 	private Connection cn;
 	private Statement st;
 	private PreparedStatement pst;
 	private ResultSet rs;
 	
-	public ConnexionOracle() {
+	public ProduitDAO_Oracle() {
 		try {
 			Class.forName("oracle.jdbc.driver.OracleDriver");
 			String url = "jdbc:oracle:thin:@162.38.222.149:1521:iut";
@@ -31,27 +35,15 @@ public class ConnexionOracle implements I_ProduitDAO {
 				e1.printStackTrace();
 			}
 		}
-		getProduits();
-	}
-	
-	@Override
-	public void deconnexion() {
-		try {
-			cn.close();
-			System.out.println("Connexion Fermée !");
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-
 	}
 
 	@Override
-	public void ajouter(String nomProduit, double prixUnitaireHT, int qteStock) {
+	public void ajouter(I_Produit produit) {
 		try {
 			rs.moveToInsertRow();
-			rs.updateString("nomProduit", nomProduit);
-			rs.updateDouble("prixUnitaireHT", prixUnitaireHT);
-			rs.updateInt("qteStock", qteStock);
+			rs.updateString("nomProduit", produit.getNom());
+			rs.updateDouble("prixUnitaireHT", produit.getPrixUnitaireHT());
+			rs.updateInt("qteStock", produit.getQuantite());
 			rs.insertRow();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -60,7 +52,7 @@ public class ConnexionOracle implements I_ProduitDAO {
 	}
 
 	@Override
-	public void getProduits() {
+	public List<I_Produit> getProduits() {
 		ArrayList<I_Produit> listeProduits = new ArrayList<I_Produit>();
 		try {
 			while (rs.next()) {
@@ -69,19 +61,35 @@ public class ConnexionOracle implements I_ProduitDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		Catalogue.getInstance().addProduits(listeProduits);
+		return listeProduits;
 	}
-
+	
 	@Override
-	public void modifier(String nomProduit, int qteStock) {
+	public I_Produit getProduitByNom(String nomProduit) {
 		try {
+			
 			pst.setString(1, nomProduit);
 			rs = pst.executeQuery();
 			if(rs.next()) {
-				rs.updateDouble("qteStock", qteStock);
+				gererProduit(rs);
+			}
+			//chargerProduits();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public void modifier(I_Produit produit) {
+		try {
+			pst.setString(1, produit.getNom());
+			rs = pst.executeQuery();
+			if(rs.next()) {
+				rs.updateDouble("qteStock", produit.getQuantite());
 				rs.updateRow();
 			}
-			chargerProduits();
+			//chargerProduits();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -89,14 +97,14 @@ public class ConnexionOracle implements I_ProduitDAO {
 	}
 
 	@Override
-	public void supprimer(String nomProduit) {
+	public void supprimer(I_Produit produit) {
 		try {
-			pst.setString(1, nomProduit);
+			//pst = cn.prepareStatement("DELETE from produits WHERE nomproduit = ?",ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+			pst.setString(1, produit.getNom());
 			rs = pst.executeQuery();
 			if(rs.next()) {
 				rs.deleteRow();
 			}
-			chargerProduits();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -113,7 +121,7 @@ public class ConnexionOracle implements I_ProduitDAO {
 			nomProduit = rs.getString("nomProduit");
 			prixHT = rs.getDouble("prixUnitaireHT");
 			qteStock = rs.getInt("qteStock");
-			System.out.println(nomProduit + " " + prixHT + " " + qteStock);
+			//System.out.println(nomProduit + " " + prixHT + " " + qteStock);
 			unProduit = new Produit(nomProduit,prixHT,qteStock);
 		}catch(Exception e) {
 			e.printStackTrace();
@@ -121,13 +129,23 @@ public class ConnexionOracle implements I_ProduitDAO {
 		return unProduit;
 	}
 	
-	private void chargerProduits() {
+//	private void chargerResultSet() {
+//		try {
+//			rs = st.executeQuery("SELECT nomProduit, prixUnitaireHT, qteStock from Produits order by nomProduit asc");
+//		}
+//		catch(SQLException e) {
+//			e.printStackTrace();
+//		}
+//	}
+	
+	private void deconnexion() {
 		try {
-			rs = st.executeQuery("SELECT nomProduit, prixUnitaireHT, qteStock from Produits order by nomProduit asc");
-		}
-		catch(SQLException e) {
+			cn.close();
+			System.out.println("Connexion Fermée !");
+		}catch(Exception e) {
 			e.printStackTrace();
 		}
+
 	}
 	
 }
